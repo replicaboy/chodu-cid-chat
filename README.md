@@ -83,14 +83,3 @@ The app will be running at http://localhost:3000
 📜 Copyright & License
 © 2026 **HARIOM THAKUR**. All Rights Reserved.
 This project and its original source code, design, and logic are the intellectual property of HARIOM THAKUR. Unauthorized copying, modification, distribution, or use of this project for commercial purposes without explicit permission is strictly prohibited.
-
-
-
-
-
-
-
-
-
-
-

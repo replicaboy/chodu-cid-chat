@@ -12,6 +12,7 @@ const soundsList = [
   '/sounds/sound3.mp3',
   '/sounds/sound4.mp3',
   '/sounds/sound5.mp3',
+  '/sounds/sound6.mp3',
 ];
 
 function App() {

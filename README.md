@@ -51,6 +51,7 @@ Follow these steps to run this project on your local machine:
 ```bash
 git clone [https://github.com/replicaboy/chodu-cid-chat.git](https://github.com/replicaboy/chodu-cid-chat.git)
 cd chodu-cid-chat
+```
 
 ### 2. Install Dependencies
 ```bash
@@ -61,14 +62,32 @@ npm install
 cd frontend
 npm install
 cd ..
+```
 
 ### 3. Environment Variables
+Create a `.env` file in the root directory and add your MongoDB connection string:
+```env
 MONGO_URI=your_mongodb_connection_string_here
+```
 
 ### 4. Build & Run
-The app will be running at http://localhost:3000
+First, build the frontend code, then start the Node server:
+```bash
+# Build frontend
+cd frontend
+npm run build
+cd ..
 
-📂 Project Structure
+# Start the server
+node server.js
+```
+The app will be running at `http://localhost:3000`.
+
+---
+
+## 📂 Project Structure
+
+```text
 /
 ├── frontend/               # React Frontend
 │   ├── public/             
@@ -79,7 +98,12 @@ The app will be running at http://localhost:3000
 ├── server.js               # Main Express & Socket.io Backend
 ├── package.json            # Backend dependencies & scripts
 └── README.md               # Project documentation
+```
 
-📜 Copyright & License
-© 2026 **HARIOM THAKUR**. All Rights Reserved.
-This project and its original source code, design, and logic are the intellectual property of HARIOM THAKUR. Unauthorized copying, modification, distribution, or use of this project for commercial purposes without explicit permission is strictly prohibited.
+---
+
+## 📜 Copyright & License
+
+**© 2026 HARIOM THAKUR. All Rights Reserved.**
+
+This project and its original source code, design, and logic are the intellectual property of **HARIOM THAKUR**. Unauthorized copying, modification, distribution, or use of this project for commercial purposes without explicit permission is strictly prohibited.

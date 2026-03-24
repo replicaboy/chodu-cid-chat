@@ -1,0 +1,1 @@
+export default function AdminPanel() { return <h2>Admin Panel (Work in Progress 🚧)</h2>; }

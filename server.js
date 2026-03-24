@@ -6,8 +6,14 @@ const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose'); // Database ke liye
 
+// 1. Auth routes ko import karna (Login/Register ke liye)
+const authRoutes = require('./routes/authRoutes');
+
 const app = express();
+
+// --- MIDDLEWARES (Ye sabse upar hone chahiye) ---
 app.use(cors());
+app.use(express.json()); // YEH MISSING THA! Iske bina backend data nahi padh pata
 
 const server = http.createServer(app);
 
@@ -20,6 +26,14 @@ const io = new Server(server, {
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB se connect ho gaya! 📦'))
   .catch(err => console.log('MongoDB error:', err));
+
+// --- API ROUTES (Naya Code) ---
+app.use('/api/auth', authRoutes);
+
+// Test route (Check karne ke liye)
+app.get('/api/test', (req, res) => {
+    res.json({ message: "Backend API ekdum zinda hai! 🚀" });
+});
 
 // Message ka structure (Schema)
 const messageSchema = new mongoose.Schema({
@@ -70,12 +84,13 @@ io.on('connection', async (socket) => {
   });
 });
 
-// Frontend files serve karna
+// --- FRONTEND FILES SERVE KARNA (Sabse aakhri mein hona chahiye) ---
 const frontendPath = path.join(__dirname, 'frontend/dist');
 app.use(express.static(frontendPath));
 
 app.use((req, res, next) => {
-  if (req.method === 'GET') {
+  // Dhyan rakhein ki ye sirf frontend pages ke liye chale, API requests ke liye nahi
+  if (req.method === 'GET' && !req.path.startsWith('/api')) {
     res.sendFile(path.join(frontendPath, 'index.html'));
   } else {
     next();

@@ -1,35 +1,36 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-// 1. Check karna ki user logged in hai ya nahi
-const protect = (req, res, next) => {
-    let token = req.headers.authorization;
+const protect = async (req, res, next) => {
+    let token;
     
-    // Check karte hain ki token bheja gaya hai ya nahi
-    if (token && token.startsWith('Bearer')) {
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
-            // "Bearer " word ko hata kar sirf actual token nikalna
-            token = token.split(' ')[1];
-            
-            // Token ko verify karna apni secret key ke sath
+            token = req.headers.authorization.split(' ')[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             
-            // User ka data aage ke steps ke liye save kar lena
-            req.user = decoded; // Isme user ki ID aur role (user/admin) hoga
-            next(); // Sab theek hai, aage badhne do
+            req.user = await User.findById(decoded.id).select('-password');
+            console.log("🟢 Protect Guard: User mil gaya ->", req.user?.email, "| Role ->", req.user?.role);
+            
+            next(); 
         } catch (error) {
-            res.status(401).json({ message: 'Not authorized, token failed' });
+            console.log("🔴 Protect Guard Error: Token verify fail hua ->", error.message);
+            return res.status(401).json({ message: 'Token verify nahi hua' });
         }
     } else {
-        res.status(401).json({ message: 'Not authorized, no token' });
+        console.log("🔴 Protect Guard: Browser ne token bheja hi nahi!");
+        return res.status(401).json({ message: 'Token nahi mila' });
     }
 };
 
-// 2. Check karna ki user Admin hai ya nahi
 const adminOnly = (req, res, next) => {
+    console.log("🟡 Admin Guard: Checking role ->", req.user?.role);
     if (req.user && req.user.role === 'admin') {
-        next(); // Agar admin hai, toh aage badhne do
+        console.log("🟢 Admin Guard: VIP Pass confirmed! Aage jane do.");
+        next(); 
     } else {
-        res.status(403).json({ message: 'Not authorized as an admin' });
+        console.log("🔴 Admin Guard: Blocked! User admin nahi hai.");
+        return res.status(403).json({ message: 'Aap Admin nahi hain!' });
     }
 };
 

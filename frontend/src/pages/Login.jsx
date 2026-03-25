@@ -11,7 +11,7 @@ export default function Login() {
         e.preventDefault();
         try {
             // Backend se login verify karwana
-            const response = await axios.post('https://glowing-bassoon-x5x65qqwp6pxfpwqr-5000.app.github.dev/api/auth/login', {
+            const response = await axios.post('/api/auth/login', {
                 email,
                 password
             });

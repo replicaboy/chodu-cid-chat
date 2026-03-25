@@ -11,8 +11,7 @@ export default function AdminPanel() {
         const fetchUsers = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const BACKEND_URL = "https://glowing-bassoon-x5x65qqwp6pxfpwqr-5000.app.github.dev";
-                
+                                
                 // Token ko header mein bhej kar data mangwana
                 const res = await axios.get('/api/auth/admin-dashboard', {
                     headers: { Authorization: `Bearer ${token}` }

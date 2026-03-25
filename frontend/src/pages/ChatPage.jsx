@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 
 // Backend ka current URL
-const socket = io('https://glowing-bassoon-x5x65qqwp6pxfpwqr-5000.app.github.dev');
+const socket = io();
 
 // 🎵 Sounds (Jo apne previous turn mein set kiye the)
 const soundFiles = [

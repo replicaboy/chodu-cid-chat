@@ -11,7 +11,7 @@ export default function Register() {
         e.preventDefault();
         try {
             // Backend URL (Port 3000) par data bhejna
-            const response = await axios.post('https://glowing-bassoon-x5x65qqwp6pxfpwqr-5000.app.github.dev/api/auth/register', {
+            const response = await axios.post('/api/auth/register', {
                 name,
                 email,
                 password
